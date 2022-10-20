@@ -61,10 +61,14 @@
       <tr>
         <th>Title</th>
         <th>Count</th>
+        <th>Price</th>
+        <th>Sum</th>
       </tr>
       <tr v-for="item of total">
         <td> {{ item.title }}</td>
         <td> {{ item.count }}</td>
+        <td> {{ getPrice(item.title) }}</td>
+        <td> {{ getPrice(item.title) * item.count }}</td>
       </tr>
     </table>
   </div>
@@ -171,6 +175,16 @@ export default class RepairShipView extends Vue {
   handleSelect(item: Ship) {
     this.selectShip = item
   }
+
+  prices = JSON.parse(localStorage.getItem('prices') ?? '[]')
+
+  getPrice(product: string) {
+    var res = this.prices[product]
+    if (!res) return 0;
+
+    return res;
+  }
+
 }
 </script>
 

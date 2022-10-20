@@ -24,7 +24,7 @@ export const repairShip: RepairShip[] = [
         title: 'повреждение механизмов',
         products: [
             {
-                product: 'хром метал',
+                product: 'хром металл',
                 count: 150,
             },
             {
@@ -37,7 +37,7 @@ export const repairShip: RepairShip[] = [
         title: 'трещина в корпусе',
         products: [
             {
-                product: 'хром метал',
+                product: 'хром металл',
                 count: 100,
             },
         ],
@@ -50,7 +50,7 @@ export const repairShip: RepairShip[] = [
                 count: 75,
             },
             {
-                product: 'металлическая обшивка',
+                product: 'метал обшивка',
                 count: 3,
             },
             {
@@ -98,7 +98,7 @@ export const repairShip: RepairShip[] = [
         title: 'обугленный кожух',
         products: [
             {
-                product: 'хром метал',
+                product: 'хром металл',
                 count: 75,
             },
             {
@@ -115,7 +115,7 @@ export const repairShip: RepairShip[] = [
         title: 'разгерметизация',
         products: [
             {
-                product: 'хром метал',
+                product: 'хром металл',
                 count: 60,
             },
             {
