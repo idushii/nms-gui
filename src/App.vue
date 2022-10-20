@@ -6,6 +6,7 @@
         <li><RouterLink to="/">Home</RouterLink></li>
         <li><RouterLink to="/products">Products</RouterLink></li>
         <li><RouterLink to="/repair-ship">Repair ship</RouterLink></li>
+        <li><RouterLink to="/stations">Stations</RouterLink></li>
       </ul>
     </div>
   </nav>
@@ -32,4 +33,12 @@ export default class HomeView extends Vue {
 .page {
   padding: 0 1rem;
 }
+
+.count-input {
+  width: 50px;
+  border: none;
+  text-align: center;
+  padding: 10px 1rem;
+}
+
 </style>

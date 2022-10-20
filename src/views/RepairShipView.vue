@@ -143,14 +143,7 @@ export default class RepairShipView extends Vue {
 }
 </script>
 
-<style lang="scss">
-.count-input {
-  width: 50px;
-  border: none;
-  text-align: center;
-  padding: 10px 1rem;
-}
-
+<style lang="scss" scoped>
 .table-repair {
   td {
     padding-top: 10px;
