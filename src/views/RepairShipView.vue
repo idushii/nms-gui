@@ -9,9 +9,9 @@
         <th>Action</th>
       </tr>
       <tr v-for="item of ships" @click="handleSelect(item)">
-        <td>{{item.title}}</td>
-        <td>{{item.type}}</td>
-        <td>{{item.cells}}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.type }}</td>
+        <td>{{ item.cells }}</td>
         <td style="width: 100px;"><a class="waves-effect waves-light btn" @click="removeShip(item)">-</a></td>
       </tr>
     </table>
@@ -30,8 +30,9 @@
       </div>
     </div>
 
+    <div v-if="selectShip.uid">
 
-    <table v-if="selectShip.uid" class="table-repair">
+    <table class="table-repair">
       <tr>
         <th>Title</th>
         <th>Count</th>
@@ -41,12 +42,32 @@
       </tr>
       <tr v-for="item of repairShip">
         <td> {{ item.title }}</td>
-        <td><input type="text" class="browser-default count-input" v-model="selectShip.repairCount[item.title]" @click="selectText"></td>
+        <td><input type="text" class="browser-default count-input" v-model="selectShip.repairCount[item.title]"
+                   @click="selectText"></td>
         <td v-for="product of item.products">
           {{ product.product }} x {{ product.count * (selectShip.repairCount[item.title] ?? 1) }}
         </td>
       </tr>
     </table>
+
+    <br>
+    <br>
+
+    <hr>
+
+    <h5>Total</h5>
+
+    <table v-if="selectShip.uid" class="table-repair">
+      <tr>
+        <th>Title</th>
+        <th>Count</th>
+      </tr>
+      <tr v-for="item of total">
+        <td> {{ item.title }}</td>
+        <td> {{ item.count }}</td>
+      </tr>
+    </table>
+  </div>
   </div>
 
   <floating-btn @click="addShip">+</floating-btn>
@@ -64,7 +85,7 @@ interface Ship {
   type: string
   cells: number
   repair: RepairShip[]
-  repairCount: {[product in string]: number}
+  repairCount: { [product in string]: number }
 }
 
 @Options({
@@ -85,13 +106,23 @@ export default class RepairShipView extends Vue {
     this.ships = JSON.parse(localStorage.getItem('repair-ships') ?? '[]')
 
     M.AutoInit()
-
     M.updateTextFields();
-
-
   }
 
-  selectShip : Ship = {
+  get total() {
+    var res: { [x in string]: number } = {}
+
+    for (let item of repairShip) {
+      for (let item2 of item.products) {
+        if (!res[item2.product]) res[item2.product] = 0;
+        res[item2.product] += item2.count * this.selectShip.repairCount[item.title] ?? 1
+      }
+    }
+
+    return Object.keys(res).map( e => ({title: e, count: res[e]}));
+  }
+
+  selectShip: Ship = {
     uid: 0,
     title: '',
     type: '',
@@ -118,8 +149,8 @@ export default class RepairShipView extends Vue {
   }
 
   emptyShip(): Ship {
-    var res2: {[x in string]: number} = {};
-    for(let item of repairShip) {
+    var res2: { [x in string]: number } = {};
+    for (let item of repairShip) {
       res2[item.title] = 1;
     }
 
