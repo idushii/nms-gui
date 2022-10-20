@@ -9,8 +9,9 @@ export interface Station {
     uid: number,
     title: string,
     level: number
-    type1: string
-    type2: string
+    type: string
+    rasa: string
+    danger: string
     products: StationProduct[],
     cell: {
         product: string,

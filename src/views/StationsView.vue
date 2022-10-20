@@ -4,14 +4,16 @@
     <table>
       <tr>
         <th>Title</th>
-        <th>Level</th>
         <th>Type</th>
+        <th>Level</th>
+        <th>Danger</th>
         <th>Action</th>
       </tr>
       <tr v-for="item of stations" @click="handleSelect(item)">
         <td>{{ item.title }}</td>
+        <td>{{ item.type }}</td>
         <td>{{ item.level }}</td>
-        <td>{{ item.type1 }} // {{ item.type2 }}</td>
+        <td>{{ item.danger }}</td>
         <td style="width: 100px;"><a class="waves-effect waves-light btn" @click="removeStation(item)">-</a></td>
       </tr>
     </table>
@@ -21,17 +23,39 @@
       <hr>
 
       <div class="row">
-        <div class="input-field col s6">
+        <div class="input-field col s4">
           <input id="title" type="text" class="validate" v-model="selectStation.title" placeholder="Title">
         </div>
         <div class="input-field col s2">
           <input id="Type" type="text" class="validate" v-model="selectStation.level" placeholder="Level">
         </div>
         <div class="input-field col s2">
-          <input id="Cells" type="text" class="validate" v-model="selectStation.type1" placeholder="Type 1">
+          <input list="type" type="text" class="validate" v-model="selectStation.type" placeholder="Type">
+          <datalist id="type">
+            <option>Продвинутые материалы</option>
+            <option>Производство</option>
+            <option>Производство энергии</option>
+            <option>Научный</option>
+            <option>Технология</option>
+            <option>Торговля</option>
+            <option>Минералы</option>
+          </datalist>
         </div>
         <div class="input-field col s2">
-          <input id="Cells" type="text" class="validate" v-model="selectStation.type2" placeholder="Type 2">
+          <input list="danger" type="text" class="validate" v-model="selectStation.danger" placeholder="Danger">
+          <datalist id="danger">
+            <option>Низкий уровень конфликта</option>
+            <option>Высокий уровень конфликта</option>
+          </datalist>
+
+        </div>
+        <div class="input-field col s2">
+          <input list="rasa" type="text" class="validate" v-model="selectStation.rasa" placeholder="Rasa">
+          <datalist id="rasa">
+            <option>Геки</option>
+            <option>Вайкиги</option>
+            <option>Вайкни</option>
+          </datalist>
         </div>
       </div>
 
@@ -55,7 +79,7 @@
           </td>
           <td><input type="text" class="browser-default count-input" v-model="item.rate" @click="selectText"></td>
           <td><input type="text" class="browser-default count-input" v-model="item.price" @click="selectText"></td>
-          <td style="width: 100px;"><a class="waves-effect waves-light btn" @click="removeProduct(item)">-</a></td>
+          <td style="width: 100px;"><a class="waves-effect waves-light btn" @click="removeCell(item)">-</a></td>
         </tr>
       </table>
 
@@ -84,6 +108,10 @@
           <td><input type="text" class="browser-default count-input" v-model="item.rate" @click="selectText"></td>
           <td><input type="text" class="browser-default count-input" v-model="item.count" @click="selectText"></td>
           <td><input type="text" class="browser-default count-input" v-model="item.price" @click="selectText"></td>
+          <td>{{
+              (item.count * item.price).toLocaleString('ru-RU')
+            }}
+          </td>
           <td style="width: 100px;"><a class="waves-effect waves-light btn" @click="removeProduct(item)">-</a></td>
         </tr>
       </table>
@@ -154,8 +182,9 @@ export default class StationsView extends Vue {
   selectStation: Station = {
     uid: 0,
     title: '',
-    type1: '',
-    type2: '',
+    type: '',
+    danger: '',
+    rasa: '',
     level: 1,
     products: [],
     cell: [],
@@ -178,9 +207,10 @@ export default class StationsView extends Vue {
     return {
       uid: Math.random(),
       title: '',
-      type1: '',
-      type2: '',
+      type: '',
+      danger: '',
       level: 1,
+      rasa: '',
       products: [emptyProduct()],
       cell: [emptyProduct()],
     };

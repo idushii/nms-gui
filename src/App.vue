@@ -35,7 +35,7 @@ export default class HomeView extends Vue {
 }
 
 .count-input {
-  width: 50px;
+  width: 70px;
   border: none;
   text-align: center;
   padding: 10px 1rem;
