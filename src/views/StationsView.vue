@@ -45,6 +45,9 @@
           <input list="danger" type="text" class="validate" v-model="selectStation.danger" placeholder="Danger">
           <datalist id="danger">
             <option>Низкий уровень конфликта</option>
+            <option>Беспокойная</option>
+            <option>Нерегулярные</option>
+            <option>Обостренная</option>
             <option>Высокий уровень конфликта</option>
           </datalist>
 
@@ -53,7 +56,7 @@
           <input list="rasa" type="text" class="validate" v-model="selectStation.rasa" placeholder="Rasa">
           <datalist id="rasa">
             <option>Геки</option>
-            <option>Вайкиги</option>
+            <option>Вай`кины</option>
             <option>Вайкни</option>
           </datalist>
         </div>
@@ -78,7 +81,7 @@
 
           </td>
           <td><input type="text" class="browser-default count-input" v-model="item.rate" @click="selectText"></td>
-          <td><input type="text" class="browser-default count-input" v-model="item.price" @click="selectText"></td>
+          <td>{{(getPrice(item.product) * (100 + Number(item.rate)) / 100).toLocaleString('ru-RU')}}</td>
           <td style="width: 100px;"><a class="waves-effect waves-light btn" @click="removeCell(item)">-</a></td>
         </tr>
       </table>
@@ -177,6 +180,11 @@ export default class StationsView extends Vue {
 
   mounted() {
     this.stations = JSON.parse(localStorage.getItem('stations') ?? '[]')
+
+    if (this.$route.query && this.stations.find(e => e.title == this.$route.query.name)) {
+      //@ts-ignore
+      this.selectStation = this.stations.find(e => e.title == this.$route.query.name)
+    }
   }
 
   selectStation: Station = {
@@ -222,6 +230,8 @@ export default class StationsView extends Vue {
 
   handleSelect(item: Station) {
     this.selectStation = item
+
+    this.$router.push({query: {name: item.title}})
 
     setTimeout(() => {
       M.AutoInit()
