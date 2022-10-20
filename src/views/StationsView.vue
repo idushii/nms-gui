@@ -7,6 +7,7 @@
         <th>Type</th>
         <th>Level</th>
         <th>Danger</th>
+        <th>Note</th>
         <th>Action</th>
       </tr>
       <tr v-for="item of stations" @click="handleSelect(item)">
@@ -14,6 +15,7 @@
         <td>{{ item.type }}</td>
         <td>{{ item.level }}</td>
         <td>{{ item.danger }}</td>
+        <td>{{ item.note }}</td>
         <td style="width: 100px;"><a class="waves-effect waves-light btn" @click="removeStation(item)">-</a></td>
       </tr>
     </table>
@@ -44,6 +46,8 @@
         <div class="input-field col s2">
           <input list="danger" type="text" class="validate" v-model="selectStation.danger" placeholder="Danger">
           <datalist id="danger">
+            <option>Мягкая</option>
+            <option>Мирная</option>
             <option>Низкий уровень конфликта</option>
             <option>Беспокойная</option>
             <option>Нерегулярные</option>
@@ -57,8 +61,14 @@
           <datalist id="rasa">
             <option>Геки</option>
             <option>Вай`кины</option>
-            <option>Вайкни</option>
+            <option>Коркваксы</option>
           </datalist>
+        </div>
+        <div class="input-field col s12">
+          <input id="note" type="text" class="validate" v-model="selectStation.note" placeholder="Note">
+        </div>
+        <div class="input-field col s12">
+          <input id="desc" type="text" class="validate" v-model="selectStation.desc" placeholder="Desc">
         </div>
       </div>
 
@@ -196,6 +206,8 @@ export default class StationsView extends Vue {
     level: 1,
     products: [],
     cell: [],
+    note: '',
+    desc: '',
   }
 
   addStation() {
@@ -221,6 +233,8 @@ export default class StationsView extends Vue {
       rasa: '',
       products: [emptyProduct()],
       cell: [emptyProduct()],
+      note: '',
+      desc: '',
     };
   }
 

@@ -8,6 +8,8 @@ export interface StationProduct {
 export interface Station {
     uid: number,
     title: string,
+    note: string,
+    desc: string,
     level: number
     type: string
     rasa: string
