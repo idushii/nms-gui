@@ -107,9 +107,9 @@
           </td>
           <td><input type="text" class="browser-default count-input" v-model="item.rate" @click="selectText"></td>
           <td><input type="text" class="browser-default count-input" v-model="item.count" @click="selectText"></td>
-          <td><input type="text" class="browser-default count-input" v-model="item.price" @click="selectText"></td>
+          <td>{{(getPrice(item.product) * (100 + Number(item.rate)) / 100).toLocaleString('ru-RU')}}</td>
           <td>{{
-              (item.count * item.price).toLocaleString('ru-RU')
+              (item.count * (getPrice(item.product)) * Number(100 + Number(item.rate)) / 100).toLocaleString('ru-RU')
             }}
           </td>
           <td style="width: 100px;"><a class="waves-effect waves-light btn" @click="removeProduct(item)">-</a></td>
@@ -244,6 +244,16 @@ export default class StationsView extends Vue {
   removeCell(item: StationProduct) {
     var index = this.selectStation.cell.indexOf(item)
     this.selectStation.cell.splice(index, 1)
+  }
+
+
+  prices = JSON.parse(localStorage.getItem('prices') ?? '[]')
+
+  getPrice(product: string) {
+    var res = this.prices[product]
+    if (!res) return 0;
+
+    return res;
   }
 }
 
