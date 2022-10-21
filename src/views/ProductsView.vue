@@ -17,7 +17,7 @@
         <th>Cell</th>
       </tr>
       <tr v-for="item of products">
-        <td> {{ item.title }}</td>
+        <td> <router-link :to="{name: 'product', query: {name: item.title.trim()}}">{{ item.title }}</router-link> </td>
         <td><input type="text" class="browser-default count-input" v-model="prices[item.title]" @click="selectText"></td>
         <td>
           <router-link v-for="station of getStationsBuy(item.title)" :to="{name: 'stations', query: {name: station.split(' (')[0].trim()}}"> {{station}} </router-link>
@@ -44,6 +44,11 @@ import {Station} from "@/station";
         localStorage.setItem('prices', JSON.stringify(value))
       }
     },
+    search: {
+      handler: function (value: string) {
+        this.$router.replace({query: { search: value }})
+      }
+    },
   },
 })
 export default class ProductsView extends Vue {
@@ -55,6 +60,10 @@ export default class ProductsView extends Vue {
     }
 
     this.prices = JSON.parse(localStorage.getItem('prices') ?? '[]')
+
+    if (this.$route.query.search) {
+      this.search = (this.$route.query.search ?? '').toString();
+    }
   }
 
   get products() {
