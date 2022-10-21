@@ -20,10 +20,10 @@
         <td> {{ item.title }}</td>
         <td><input type="text" class="browser-default count-input" v-model="prices[item.title]" @click="selectText"></td>
         <td>
-          <router-link v-for="station of getStationsBuy(item.title)" :to="{name: 'stations', query: {name: station.split(' (')[0]}}"> {{station}} </router-link>
+          <router-link v-for="station of getStationsBuy(item.title)" :to="{name: 'stations', query: {name: station.split(' (')[0].trim()}}"> {{station}} </router-link>
         </td>
         <td>
-          <router-link v-for="station of getStationsCell(item.title)" :to="{name: 'stations', query: {name: station.split(' (')[0]}}"> {{station}} </router-link>
+          <router-link v-for="station of getStationsCell(item.title)" :to="{name: 'stations', query: {name: station.split(' (')[0].trim()}}"> {{station}} </router-link>
         </td>
       </tr>
     </table>
